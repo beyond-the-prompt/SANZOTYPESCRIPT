@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BARBANZO NAV SOLID</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { font-family: system-ui, sans-serif; background:#000; color:#fff; }
+    .gold { color:#facc15; text-shadow:0 0 20px #facc15; }
+    .chrome { border:3px solid #facc15; box-shadow:0 0 35px #facc15, inset 0 0 15px #facc15; }
+    .shimmer { animation:shimmer 3s infinite linear; background:linear-gradient(90deg,transparent,#facc15aa,transparent); background-size:200% 100%; }
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+    .matte { background:#0a0a0a; }
+    .hidden { display:none !important; }
+    .nav-btn { color:#888; transition:all .2s; }
+    .nav-btn-active { color:#facc15 !important; }
+  </style>
+</head>
+<body class="min-h-screen overflow-x-hidden pb-24">
+  <!-- SPLASH -->
+  <div id="splash" class="fixed inset-0 flex flex-col items-center justify-center z-50 matte">
+    <div class="text-center">
+      <h1 class="text-6xl font-black tracking-tighter gold shimmer">BARBANZO</h1>
+      <p class="text-amber-300 text-2xl tracking-widest mt-2">SCRIPT</p>
+      <p class="mt-12 text-sm text-zinc-400">Michael Sanzo • William Barbeau</p>
+    </div>
+    <button onclick="enterAcademy()" class="mt-20 px-12 py-6 border-2 border-amber-400 text-amber-400 font-bold tracking-widest hover:bg-amber-400 hover:text-black">
+      ENTER THE RITUAL
+    </button>
+  </div>
+  <!-- APP -->
+  <div id="app" class="hidden min-h-screen">
+    <!-- HEADER -->
+    <header class="fixed top-0 left-0 right-0 h-16 matte border-b border-amber-400/30 flex items-center px-6 z-50">
+      <button onclick="goBack()" class="text-3xl mr-4 text-amber-300"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="gold text-3xl font-black tracking-tighter flex-1 text-center">BARBANZO SCRIPT</div>
+      <button onclick="showHelp()" class="text-3xl text-amber-300"><i class="fa-solid fa-circle-question"></i></button>
+    </header>
+    <!-- HOME -->
+    <div id="home" class="pt-20 max-w-md mx-auto px-6">
+      <div class="bg-zinc-950 border border-amber-400/30 p-8 rounded-3xl text-sm leading-relaxed max-h-[55vh] overflow-y-auto mb-8">
+        I started all of this with a broken smartphone and a computer in a motel room...<br><br>
+        BARBANZO SCRIPT wasn’t born in a classroom. It was born in silence, in repetition, in instinct, in discipline...<br><br>
+        — Brother (Michael Sanzo)
+      </div>
+      <div class="bg-zinc-950 border border-amber-400/30 p-6 rounded-3xl mb-8">
+        <p class="text-xs text-amber-300 mb-3">GROQ API KEY (free at groq.com)</p>
+        <input id="groq-key" type="password" class="w-full bg-black border border-amber-400/50 rounded-2xl px-5 py-4 text-sm" placeholder="gsk_...">
+        <button onclick="saveKey()" class="mt-4 w-full py-3 bg-amber-400 text-black font-bold rounded-2xl">SAVE KEY</button>
+      </div>
+    </div>
+    <!-- BEGINNER -->
+    <div id="beginner" class="hidden pt-20 max-w-md mx-auto px-6">
+      <h2 class="text-3xl font-black gold mb-8 text-center">BEGINNER BUILDER</h2>
+      <div class="space-y-6">
+        <div><label class="text-amber-300 block mb-1 text-xs uppercase">META</label><textarea id="b-meta" rows="3" class="w-full bg-zinc-900 border border-amber-400/40 rounded-xl p-4 text-sm" placeholder="MODE: IMAGE\nTONE: ULTRA-REALISTIC"></textarea></div>
+        <div><label class="text-amber-300 block mb-1 text-xs uppercase">SUBJECT</label><textarea id="b-subject" rows="3" class="w-full bg-zinc-900 border border-amber-400/40 rounded-xl p-4 text-sm" placeholder="TYPE: HUMAN\nDETAILS: bald head..."></textarea></div>
+        <div><label class="text-amber-300 block mb-1 text-xs uppercase">CAMERA</label><textarea id="b-camera" rows="3" class="w-full bg-zinc-900 border border-amber-400/40 rounded-xl p-4 text-sm" placeholder="MOVE: slow dolly-in"></textarea></div>
+        <div><label class="text-amber-300 block mb-1 text-xs uppercase">LIGHTING</label><textarea id="b-lighting" rows="3" class="w-full bg-zinc-900 border border-amber-400/40 rounded-xl p-4 text-sm" placeholder="TYPE: industrial"></textarea></div>
+        <div><label class="text-amber-300 block mb-1 text-xs uppercase">ENVIRONMENT</label><textarea id="b-env" rows="3" class="w-full bg-zinc-900 border border-amber-400/40 rounded-xl p-4 text-sm" placeholder="LOCATION: rain-slicked alley"></textarea></div>
+        <div><label class="text-amber-300 block mb-1 text-xs uppercase">MOTION</label><textarea id="b-motion" rows="3" class="w-full bg-zinc-900 border border-amber-400/40 rounded-xl p-4 text-sm" placeholder="TYPE: predator crouch"></textarea></div>
+        <div><label class="text-amber-300 block mb-1 text-xs uppercase">ATMOSPHERE</label><textarea id="b-atmo" rows="3" class="w-full bg-zinc-900 border border-amber-400/40 rounded-xl p-4 text-sm" placeholder="ELEMENTS: mist, embers"></textarea></div>
+        <div><label class="text-amber-300 block mb-1 text-xs uppercase">STYLE</label><textarea id="b-style" rows="3" class="w-full bg-zinc-900 border border-amber-400/40 rounded-xl p-4 text-sm" placeholder="LOOK: hyper-real cinematic"></textarea></div>
+      </div>
+      <button onclick="executeBeginner()" class="mt-10 w-full py-6 bg-amber-400 text-black font-black text-xl rounded-3xl">EXECUTE BARBANZO SCRIPT</button>
+      <pre id="beginner-out" class="mt-8 hidden bg-black border border-amber-400/30 p-6 rounded-2xl font-mono text-sm whitespace-pre-wrap overflow-auto"></pre>
+      <button id="enhance-btn-b" onclick="enhanceWithGroq('beginner')" class="hidden mt-4 w-full py-4 border-2 border-amber-400 text-amber-400 font-bold rounded-2xl">ENHANCE WITH GROQ → REAL QUALITY</button>
+      <button id="copy-btn-b" onclick="copyOutput('beginner-out')" class="hidden mt-3 w-full py-3 text-amber-400 border border-amber-400/50 rounded-2xl">COPY FINAL PROMPT</button>
+    </div>
+    <!-- EXPERT -->
+    <div id="expert" class="hidden pt-20 max-w-md mx-auto px-6">
+      <h2 class="text-3xl font-black gold mb-8 text-center">EXPERT MODE</h2>
+      <textarea id="expert-text" rows="18" class="w-full bg-zinc-900 border border-amber-400/40 rounded-3xl p-6 font-mono text-sm">BARBANZO SCRIPT:
+META:
+SUBJECT:
+CAMERA:
+LIGHTING:
+ENVIRONMENT:
+MOTION:
+ATMOSPHERE:
+STYLE:
+END:
+  AR: 9:16
+  STYLIZE: ISO
+  MODE: RAW</textarea>
+      <button onclick="executeExpert()" class="mt-8 w-full py-6 bg-amber-400 text-black font-black text-xl rounded-3xl">EXECUTE COMMAND</button>
+      <pre id="expert-out" class="mt-8 hidden bg-black border border-amber-400/30 p-6 rounded-2xl font-mono text-sm whitespace-pre-wrap overflow-auto"></pre>
+      <button id="enhance-btn-e" onclick="enhanceWithGroq('expert')" class="hidden mt-4 w-full py-4 border-2 border-amber-400 text-amber-400 font-bold rounded-2xl">ENHANCE WITH GROQ → REAL QUALITY</button>
+      <button id="copy-btn-e" onclick="copyOutput('expert-out')" class="hidden mt-3 w-full py-3 text-amber-400 border border-amber-400/50 rounded-2xl">COPY FINAL PROMPT</button>
+    </div>
+    <!-- RULES -->
+    <div id="rules" class="hidden pt-20 max-w-md mx-auto px-6">
+      <h2 class="text-3xl font-black gold mb-8 text-center">RULES OF BARBANZO SCRIPT</h2>
+      <ol class="list-decimal pl-6 space-y-4 text-sm">
+        <li>Short commands beat long paragraphs</li>
+        <li>Every module must be intentional</li>
+        <li>No filler words</li>
+        <li>The order is sacred — do not rearrange</li>
+        <li>END block is mandatory</li>
+        <li>The author is king. The system obeys. No suggestions. No overrides.</li>
+      </ol>
+    </div>
+    <!-- VAULT -->
+    <div id="vault" class="hidden pt-20 max-w-md mx-auto px-6">
+      <h2 class="text-3xl font-black gold mb-8 text-center">CERTIFICATE VAULT</h2>
+      <div id="cert-list" class="space-y-6"></div>
+      <button onclick="issueCert()" class="mt-10 w-full py-6 bg-amber-400 text-black font-black text-xl rounded-3xl">ISSUE NEW CERTIFICATE</button>
+    </div>
+    <!-- BOTTOM NAV -->
+    <nav class="fixed bottom-0 left-0 right-0 h-16 matte border-t border-amber-400/30 flex items-center justify-around text-xs z-50">
+      <button onclick="navTo('home')" class="nav-btn flex flex-col items-center"><i class="fa-solid fa-house text-2xl"></i><span class="mt-1">Home</span></button>
+      <button onclick="navTo('beginner')" class="nav-btn flex flex-col items-center"><i class="fa-solid fa-graduation-cap text-2xl"></i><span class="mt-1">Beginner</span></button>
+      <button onclick="navTo('expert')" class="nav-btn flex flex-col items-center"><i class="fa-solid fa-terminal text-2xl"></i><span class="mt-1">Expert</span></button>
+      <button onclick="navTo('rules')" class="nav-btn flex flex-col items-center"><i class="fa-solid fa-scroll text-2xl"></i><span class="mt-1">Rules</span></button>
+      <button onclick="navTo('vault')" class="nav-btn flex flex-col items-center"><i class="fa-solid fa-certificate text-2xl"></i><span class="mt-1">Vault</span></button>
+    </nav>
+  </div>
+  <!-- HELP MODAL -->
+  <div id="help-modal" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-[100]">
+    <div class="max-w-md mx-auto bg-zinc-950 border border-amber-400 rounded-3xl p-8 text-sm max-h-[80vh] overflow-y-auto">
+      <h3 class="gold text-2xl font-black mb-6">BROTHER’S EXACT RULES</h3>
+      <p class="mb-6">"The author is king. The system obeys. No suggestions. No overrides."</p>
+      <p class="mb-4">Order is sacred: META → SUBJECT → CAMERA → LIGHTING → ENVIRONMENT → MOTION → ATMOSPHERE → STYLE → END</p>
+      <button onclick="hideHelp()" class="mt-8 w-full py-4 border border-amber-400 text-amber-400 rounded-2xl font-bold">CLOSE</button>
+    </div>
+  </div>
+
+  <script>
+    let groqKey = localStorage.getItem('groqKey') || '';
+    let certs = JSON.parse(localStorage.getItem('barbanzoCerts') || '[]');
+    let currentPage = 'home';
+
+    function haptic() {
+      if ('vibrate' in navigator) navigator.vibrate(22);
+    }
+
+    function saveKey() {
+      haptic();
+      groqKey = document.getElementById('groq-key').value.trim();
+      if (groqKey) localStorage.setItem('groqKey', groqKey);
+      alert(groqKey ? 'Key saved — real quality unlocked' : 'Key required for Groq');
+    }
+
+    function enterAcademy() {
+      haptic();
+      document.getElementById('splash').style.display = 'none';
+      document.getElementById('app').classList.remove('hidden');
+      navTo('home');
+      renderCerts();
+    }
+
+    function navTo(page) {
+      haptic();
+      document.querySelectorAll('#app > div[id]').forEach(d => d.classList.add('hidden'));
+      document.getElementById(page).classList.remove('hidden');
+      currentPage = page;
+      window.scrollTo(0,0);
+    }
+
+    function goBack() {
+      haptic();
+      if (currentPage !== 'home') navTo('home');
+    }
+
+    function showHelp() {
+      haptic();
+      document.getElementById('help-modal').classList.remove('hidden');
+    }
+
+    function hideHelp() {
+      haptic();
+      document.getElementById('help-modal').classList.add('hidden');
+    }
+
+    function executeBeginner() {
+      haptic();
+      let script = `BARBANZO SCRIPT:\n\n`;
+      ['meta','subject','camera','lighting','env','motion','atmo','style'].forEach(m => {
+        const val = document.getElementById(`b-${m}`).value.trim();
+        script += `${m.toUpperCase().replace('ENV','ENVIRONMENT').replace('ATMO','ATMOSPHERE')}:\n${val}\n\n`;
+      });
+      script += `END:\n AR: 9:16\n STYLIZE: ISO\n MODE: RAW`;
+      const out = document.getElementById('beginner-out');
+      out.textContent = script;
+      out.classList.remove('hidden');
+      document.getElementById('enhance-btn-b').classList.remove('hidden');
+      document.getElementById('copy-btn-b').classList.remove('hidden');
+    }
+
+    function executeExpert() {
+      haptic();
+      const out = document.getElementById('expert-out');
+      out.textContent = document.getElementById('expert-text').value.trim();
+      out.classList.remove('hidden');
+      document.getElementById('enhance-btn-e').classList.remove('hidden');
+      document.getElementById('copy-btn-e').classList.remove('hidden');
+    }
+
+    async function enhanceWithGroq(mode) {
+      haptic();
+      if (!groqKey) return alert('Save Groq key on Home first');
+      const outEl = document.getElementById(mode + '-out');
+      const current = outEl.textContent;
+      outEl.textContent = 'Calling Groq — staying 100% faithful to Brother...';
+      try {
+        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${groqKey}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: "llama-3.3-70b-versatile",
+            messages: [{
+              role: "system",
+              content: "You are the BARBANZO EXECUTOR by Michael Sanzo. Obey the exact 9-module structure. Never add, suggest or change anything the author wrote. Expand ONLY into highest quality cinematic prompt."
+            }, { role: "user", content: current }],
+            temperature: 0.7, max_tokens: 900
+          })
+        });
+        const data = await res.json();
+        outEl.textContent = data.choices?.[0]?.message?.content || 'Groq error';
+      } catch(e) { outEl.textContent = 'Groq error — check key or internet'; }
+    }
+
+    function copyOutput(id) {
+      haptic();
+      const text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(() => alert('✅ Copied — paste anywhere'));
+    }
+
+    function renderCerts() {
+      const container = document.getElementById('cert-list');
+      container.innerHTML = certs.map((c,i) => `
+        <div class="chrome matte p-8 rounded-3xl text-center">
+          <div class="text-xs text-amber-300">CERT #${i+1} • ${c.date}</div>
+          <div class="text-2xl font-black gold mt-2">BARBANZO SCRIPT MASTER</div>
+          <div class="mt-6 text-[10px] text-zinc-400 font-mono leading-tight break-all">${c.prompt}</div>
+        </div>
+      `).join('');
+    }
+
+    function issueCert() {
+      haptic();
+      let prompt = 'Pure instinct ritual';
+      if (currentPage === 'expert' && !document.getElementById('expert-out').classList.contains('hidden')) {
+        prompt = document.getElementById('expert-out').textContent.trim().slice(0, 120) + '...';
+      } else if (currentPage === 'beginner' && !document.getElementById('beginner-out').classList.contains('hidden')) {
+        prompt = document.getElementById('beginner-out').textContent.trim().slice(0, 120) + '...';
+      }
+
+      certs.unshift({
+        id: Date.now(),
+        date: new Date().toLocaleDateString('en-US', {month:'short', day:'numeric'}),
+        prompt: prompt
+      });
+      localStorage.setItem('barbanzoCerts', JSON.stringify(certs));
+      renderCerts();
+    }
+
+    // Auto enter for testing (remove comment when done)
+    // enterAcademy();
+  </script>
+</body>
+</html>
